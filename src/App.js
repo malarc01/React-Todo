@@ -2,6 +2,7 @@ import React from 'react';
 import TodoForm from './components/TodoComponents/TodoForm'
 import Todo from './components/TodoComponents/Todo'
 
+import './components/TodoComponents/Todo.css'
 const todo = [
   {
     task: 'Organize Garage',
@@ -44,15 +45,42 @@ class App extends React.Component {
       [e.target.name]: e.target.value
     });
   }
+  trueFalse = info => {
+      this.setState({
+        todolist: this.state.todolist.map(event => {
+          if (info === event.id) {
+            return {
+              ...event, // same as below
+              //             name: item.name,
+              //             id: item.id,
+              //             purchased: item.purchased,
+              completed: !event.completed
+            };
+          }
+          return event;
+        })
+      });
+    };
 
+  clearCompleted = event =>{
+    event.preventDefault();
+    console.log('TEST');
+    this.setState({
+      todolist: this.state.todolist.filter(event => !event.completed)
+    })
+  }
 
   render() {
+    const sortedList = this.state.todolist.sort((a,b)=> a.completed-b.completed);
     return (
       <div>
         <h2> Your Todo For Today</h2>
         <div className="todo-list">
-        {this.state.todolist.map((task,index) => (
-          < Todo key={index} chicekn={task} />
+        {sortedList.map((task,index) => (
+          < Todo
+          key={index}
+          chicekn={task}
+          toggleItem= {this.trueFalse} />
         ))}
         </div>
         <TodoForm
@@ -62,6 +90,10 @@ class App extends React.Component {
         id={this.state.id}
         completed ={this.state.completed}
         />
+
+
+
+        <button onClick={this.clearCompleted}>Be Gone!</button>
       </div>
     );
   }
