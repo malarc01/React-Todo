@@ -3,11 +3,14 @@ import React from 'react';
 function Todo (props){
   return(
     <div className="todo-card">
-      <div className="todo-info">
+      <div
+      className={`item${props.chicekn.completed ? ' completed': ''}`}
+      onClick={()=>props.toggleItem(props.chicekn.id)}
+      >
         <h3>{props.chicekn.task}</h3>
-        <p><strong>Task:</strong> {props.chicekn.task}</p>
-        <p><strong>ID:</strong> {props.chicekn.id}</p>
-        <p><strong>Completed:</strong> {props.chicekn.completed}</p>
+        <p>Task: {props.chicekn.task}</p>
+        <p>ID: {props.chicekn.id}</p>
+        <p>Completed: {props.chicekn.completed}</p>
       </div>
 
 
